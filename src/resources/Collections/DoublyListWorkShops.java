@@ -93,21 +93,99 @@ public class DoublyListWorkShops {
         return current;
     }
 
+    public DoublyItemWorkShop<StackEquipments> FindReverse(int numberWorkShop){
+        var current = getTail();
+
+        while (current != null){
+            if(current.getWorkShopNumber() == numberWorkShop)
+                break;
+
+            current = current.getPrevious();
+        }
+
+        return current;
+    }
+
     public void Add(int numberWorkShop, int lengthWorkShop){
-        var workShopEntity = new WorkShop(numberWorkShop);
-        var stackEquipments = new StackEquipments(lengthWorkShop);
-        var workShop = new DoublyItemWorkShop<StackEquipments>(workShopEntity, stackEquipments);
+        var stackWorkShop = InitDoublyItemWorkShop(
+                numberWorkShop,
+                lengthWorkShop);
 
         if(getHead() == null){
-            setHead(workShop);
+            setHead(stackWorkShop);
         }
         else{
-            getTail().setNext(workShop);
-            workShop.setPrevious(getTail());
+            getTail().setNext(stackWorkShop);
+            stackWorkShop.setPrevious(getTail());
         }
 
-        setTail(workShop);
+        setTail(stackWorkShop);
         Count++;
+    }
+
+    public void AddAfter(
+            int numberWorkShop,
+            int lengthWorkShop,
+            int numberFindWorkShop){
+        if(Head == null){
+            Add(numberWorkShop, lengthWorkShop);
+            return;
+        }
+
+        var current = Find(numberFindWorkShop);
+
+        if(current != null){
+            var stackWorkShop = InitDoublyItemWorkShop(
+                    numberWorkShop,
+                    lengthWorkShop);
+            if(current.getNext() != null){
+                stackWorkShop.setNext(current.getNext());
+                current.getNext().setPrevious(stackWorkShop);
+            }
+            else{
+                setTail(stackWorkShop);
+            }
+
+            current.setNext(stackWorkShop);
+            stackWorkShop.setPrevious(current);
+        }
+    }
+
+    public void AddBefore(
+            int numberWorkShop,
+            int lengthWorkShop,
+            int numberFindWorkShop){
+        if(Head == null){
+            Add(numberWorkShop, lengthWorkShop);
+            return;
+        }
+
+        var current = FindReverse(numberFindWorkShop);
+
+        if(current != null){
+            var stackWorkShop = InitDoublyItemWorkShop(
+                    numberWorkShop,
+                    lengthWorkShop);
+            if(current.getPrevious() != null){
+                stackWorkShop.setPrevious(current.getPrevious());
+                current.getPrevious().setNext(stackWorkShop);
+            }
+            else{
+                setHead(stackWorkShop);
+            }
+
+            current.setPrevious(stackWorkShop);
+            stackWorkShop.setNext(current);
+        }
+    }
+
+    private DoublyItemWorkShop<StackEquipments> InitDoublyItemWorkShop(
+            int numberWorkShop,
+            int lengthWorkShop){
+        var workShop = new WorkShop(numberWorkShop);
+        var equipments = new StackEquipments(lengthWorkShop);
+        var stackWorkShop = new DoublyItemWorkShop<StackEquipments>(workShop, equipments);
+        return stackWorkShop;
     }
 
     public void AddInWorkShop(int numberWorkShop, Equipment equipment){

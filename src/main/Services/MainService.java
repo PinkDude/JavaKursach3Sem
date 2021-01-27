@@ -48,6 +48,12 @@ public class MainService {
                     if(companyNew != null)
                         company = companyNew;
                     break;
+                case 9:
+                    AddWorkShopBefore(company);
+                    break;
+                case 10:
+                    AddWorkShopAfter(company);
+                    break;
                 case 0:
                     exit = true;
                     break;
@@ -59,6 +65,40 @@ public class MainService {
             if(exit)
                 break;
         }
+    }
+
+    private void AddWorkShopAfter(DoublyListWorkShops company){
+        System.out.println("После какого цеха добавить?");
+        var numberFindWorkShop = GetAnswerInt();
+
+        System.out.println("Какой цех добавить?");
+        var numberWorkShop = GetAnswerInt();
+
+        System.out.println("Сколько максмально может быть оборудования в этом цехе?");
+        var lengthWorkShop = GetAnswerInt();
+        if(lengthWorkShop < 1){
+            System.out.println("Минимальное количество оборудования в цехе - 1!");
+            return;
+        }
+
+        company.AddAfter(numberWorkShop, lengthWorkShop, numberFindWorkShop);
+    }
+
+    private void AddWorkShopBefore(DoublyListWorkShops company){
+        System.out.println("До какого цеха добавить?");
+        var numberFindWorkShop = GetAnswerInt();
+
+        System.out.println("Какой цех добавить?");
+        var numberWorkShop = GetAnswerInt();
+
+        System.out.println("Сколько максмально может быть оборудования в этом цехе?");
+        var lengthWorkShop = GetAnswerInt();
+        if(lengthWorkShop < 1){
+            System.out.println("Минимальное количество оборудования в цехе - 1!");
+            return;
+        }
+
+        company.AddBefore(numberWorkShop, lengthWorkShop, numberFindWorkShop);
     }
 
     private DoublyListWorkShops LoadFromFile(){
@@ -204,6 +244,8 @@ public class MainService {
                 "6) Изменить название компании\n" +
                 "7) Сохранить\n" +
                 "8) Загрузить\n" +
+                "9) Добавить цех до\n" +
+                "10) Добавить цех после\n" +
                 "0) Выход\n");
     }
 
