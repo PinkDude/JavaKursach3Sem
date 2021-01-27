@@ -64,6 +64,10 @@ public class StackEquipments {
         return equipment;
     }
 
+    public Equipment Peek(){
+        return items[count - 1];
+    }
+
     public ArrayList<Equipment> GetList(){
         var list = new ArrayList<Equipment>(getCount());
 
