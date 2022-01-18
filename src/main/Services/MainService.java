@@ -104,7 +104,6 @@ public class MainService {
     private DoublyListWorkShops LoadFromFile(){
         try {
             var objectMapper = new ObjectMapper();
-            //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             var companyExport = objectMapper.readValue(new File(FileName), CompanyExport.class);
             var company = new DoublyListWorkShops(companyExport);
             return company;

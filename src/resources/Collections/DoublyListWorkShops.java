@@ -149,6 +149,9 @@ public class DoublyListWorkShops {
             current.setNext(stackWorkShop);
             stackWorkShop.setPrevious(current);
         }
+        else{
+            System.out.println("Заданного цеха не существует!");
+        }
     }
 
     public void AddBefore(
@@ -177,6 +180,9 @@ public class DoublyListWorkShops {
             current.setPrevious(stackWorkShop);
             stackWorkShop.setNext(current);
         }
+        else{
+            System.out.println("Заданного цеха не существует!");
+        }
     }
 
     private DoublyItemWorkShop<StackEquipments> InitDoublyItemWorkShop(
@@ -190,6 +196,11 @@ public class DoublyListWorkShops {
 
     public void AddInWorkShop(int numberWorkShop, Equipment equipment){
         var currentWorkShop = Find(numberWorkShop);
+
+        if(currentWorkShop == null){
+            System.out.println("Заданного цеха не существует!");
+            return;
+        }
 
         currentWorkShop.getData().Push(equipment);
     }
@@ -215,12 +226,20 @@ public class DoublyListWorkShops {
             Count--;
             return current;
         }
+        else{
+            System.out.println("Цеха с заданным номером не существует!");
+        }
 
         return null;
     }
 
     public Equipment RemoveInWorkShop(int numberWorkShop){
         var current = Find(numberWorkShop);
+
+        if(current == null){
+            System.out.println("Заданного цеха не существует!");
+            return null;
+        }
 
         var equipment = current.getData().Pop();
 
